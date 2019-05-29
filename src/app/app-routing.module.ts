@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { StreamViewerComponent } from './stream-viewer/stream-viewer.component';
+
+const routes: Routes = [{ 
+  path: 'streams', component: StreamViewerComponent 
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

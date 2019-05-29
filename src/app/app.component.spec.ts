@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'blockchain-viewer'`, () => {
+  it(`should have as title 'bcstream'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('blockchain-viewer');
+    expect(app.title).toEqual('bcstream');
   });
 
   it('should render title in a h1 tag', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to blockchain-viewer!');
+    expect(compiled.querySelector('h1').textContent).toContain('Welcome to bcstream!');
   });
 });
