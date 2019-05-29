@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 
 import { StreamService } from '../services/stream-service';
 import { Block, Transaction } from './stream-viewer.model';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-stream-viewer',
   templateUrl: './stream-viewer.component.html',
   styleUrls: ['./stream-viewer.component.sass']
 })
-export class StreamViewerComponent implements OnInit {
+export class StreamViewerComponent implements OnInit, OnDestroy {
   streamBlocks: Observable<any>;
   streamTransactions: Observable<any>;
 
@@ -20,12 +20,16 @@ export class StreamViewerComponent implements OnInit {
   sourceBlocks: MatTableDataSource<any>;
   sourceTransactions: MatTableDataSource<any>;
 
-  constructor(streamService: StreamService) { 
+  constructor(streamService: StreamService) {
     this.streamBlocks = streamService.streamBlocks('wss://ws.blockchain.info/inv');
     this.streamTransactions = streamService.streamTransactions('wss://ws.blockchain.info/inv');
 
     this.listBlocks = [];
     this.listTransactions = [];
+  }
+
+  ngOnDestroy(): void {
+
   }
 
   ngOnInit() {
@@ -44,8 +48,12 @@ export class StreamViewerComponent implements OnInit {
     });
 
     this.streamTransactions.subscribe(message => {
+      const timestamp = new Date(message.x.time * 1000);
+      const time = timestamp.getSeconds() + ' seconds';
+
       this.listTransactions.push({
         id: message.x.hash,
+        age: time,
         output: message.x.value
       });
 
